@@ -129,7 +129,7 @@ namespace SCP008X
             {
                 float oldAhp = ev.Attacker.ArtificialHealth;
                 float gainAmount = Plugin.Instance.Config.Scp008Buff.GainAhp;
-                ev.Attacker.HumeShield = Math.Min(oldAhp + gainAmount, Plugin.Instance.Config.Scp008Buff.MaxGain);
+                ev.Attacker.AddAhp(oldAhp + gainAmount, Plugin.Instance.Config.Scp008Buff.MaxGain);
             }
 
             if (Random.Range(0, 100) > Plugin.Instance.Config.Virus.Chance)
