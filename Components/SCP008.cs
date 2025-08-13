@@ -53,8 +53,7 @@ namespace SCP008X.Components
             if (ev.Item.Category != ItemCategory.Medical)
                 return;
 
-            if (!ev.Player.ReferenceHub.TryGetComponent(out SCP008 scp008))
-
+            if (!ev.Player.ReferenceHub.TryGetComponent(out SCP008 _))
                 return;
 
             switch (ev.Item.Type)
