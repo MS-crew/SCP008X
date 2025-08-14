@@ -9,31 +9,31 @@
 <div align="center">
 Adds the SCP-008 (Zombie Plague) mechanic to your server with extensive customization options.</div>
 
-SCP-008X
+## SCP-008X
 This plugin introduces the SCP-008 zombie plague to your server, allowing you to control every aspect of it.
 
-Configurable Infection: Control the chance of players getting infected by zombie attacks and the probability of curing the infection with medkits.
+- **Configurable Infection:** Control the chance of players getting infected by zombie attacks and the probability of curing the infection with medkits.
 
-Zombie Buffs: Reward zombies with temporary health (AHP) for each kill and set the maximum limit they can accumulate.
+- **Zombie Buffs:** Reward zombies with temporary health (AHP) for each kill and set the maximum limit they can accumulate.
 
-Containment Breach Events: Trigger server-wide CASSIE announcements and facility-wide blackouts during a containment breach event.
+- **Containment Breach Events:** Trigger server-wide CASSIE announcements and facility-wide blackouts during a containment breach event.
 
-Customizable Alerts: Fully customize all player-facing hints, infection alerts, and CASSIE announcements.
+- **Customizable Alerts:** Fully customize all player-facing hints, infection alerts, and CASSIE announcements.
 
-Area of Effect (AOE) Infection: Enable an Area of Effect (AOE) infection ability for zombies, affecting nearby players.
+- **Area of Effect (AOE) Infection:** Enable an Area of Effect (AOE) infection ability for zombies, affecting nearby players.
 
-Round-End Statistics: Enable summary stats at the end of the round to display the number of SCP-008 victims.
+- **Round-End Statistics:** Enable summary stats at the end of the round to display the number of SCP-008 victims.
 
-Installation
-Download the latest release of the plugin from the releases page on GitHub.
+## Installation
+- Download the latest release of the plugin from the releases page on GitHub.
 
-Extract the contents of the downloaded file into your \AppData\Roaming\EXILED\Plugins directory.
+- Extract the contents of the downloaded file into your \AppData\Roaming\EXILED\Plugins directory.
 
-Configure the plugin settings according to your server's needs.
+- Configure the plugin settings according to your server's needs.
 
-Restart your server to apply the changes.
+- Restart your server to apply the changes.
 
-Feedback and Issues
+## Feedback and Issues
 We are actively developing this plugin. We welcome any feedback, bug reports, or suggestions for improvement.
 
 Report Issues: Issues Page
@@ -43,7 +43,7 @@ Contact: discerrahidenetim@gmail.com
 Thank you for using our plugin and helping us improve it!
 
 Default Config
-YAML
+```yml
 
 is_enabled: true
 debug: false
