@@ -91,7 +91,7 @@ scp008role:
   name: 'SCP-008'
   description: 'An instance of SCP-008 that spreads the infection with each hit.'
   custom_info: 'SCP-008'
-  ignore_spawn_system: false
+  ignore_spawn_system: true
   keep_position_on_spawn: true
   keep_inventory_on_spawn: true
   spawn_properties:
