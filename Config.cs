@@ -40,6 +40,8 @@ namespace SCP008X
         [Description("The message displayed to a player when they become infected with SCP-008.")]
         public string InfectionAlert { get; set; } = "You've been infected! Use SCP-500 or a medkit to be cured!";
         public float InfectionDamagePerSeconds { get; set; } = 4f;
+
+        public bool InfectItems { get; set; } = true;
     }
 
     public class AoeInfection

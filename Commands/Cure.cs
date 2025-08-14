@@ -34,7 +34,8 @@ namespace SCP008X.Commands
                 return false;
             }
 
-            bool cured = Methods.Cure(ply);
+            bool cured = ply.Cure();
+
             response = cured ? $"{ply.Nickname} has been cured." : $"{ply.Nickname} is not infected with SCP-008.";
             return cured;
         }

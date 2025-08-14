@@ -1,11 +1,9 @@
 ﻿using MEC;
-using PlayerRoles;
 using UnityEngine;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using System.Collections.Generic;
 using Exiled.Events.EventArgs.Player;
-
 using Playerh = Exiled.Events.Handlers.Player;
 
 namespace SCP008X.Components
@@ -42,7 +40,7 @@ namespace SCP008X.Components
             if (ev.Reason == SpawnReason.Escaped)
                 return;
 
-            Methods.Cure(ply);
+            ply.Cure();
         }
 
         public void OnHealed(UsedItemEventArgs ev)
@@ -50,7 +48,7 @@ namespace SCP008X.Components
             if (ev.Player != ply)
                 return;
 
-            if (ev.Item.Category != ItemCategory.Medical)
+            if (ev.Item.Category is not ItemCategory.Medical and ItemCategory.SCPItem)
                 return;
 
             if (!ev.Player.ReferenceHub.TryGetComponent(out SCP008 scp008))
@@ -60,19 +58,25 @@ namespace SCP008X.Components
             switch (ev.Item.Type)
             {
                 case ItemType.SCP500:
-                    Methods.Cure(ply);
-                    Log.Debug($"{ev.Player} successfully cured themselves.");
-                    ev.Player.Broadcast(3, message: "You cured your self", shouldClearPrevious: true);
+                    Cured(ev.Player);
                     break;
                 case ItemType.Medkit:
                     if (Random.Range(0, 100) < Plugin.Instance.Config.Virus.CureChance)
                     {
-                        Methods.Cure(ply);
-                        Log.Debug($"{ev.Player} successfully cured themselves.");
-                        ev.Player.Broadcast(3, message: "You cured your self", shouldClearPrevious: true);
+                        Cured(ev.Player);
                     }
                     break;
+
+                default:
+                    break;
             }
+        }
+
+        private void Cured(Player player)
+        {
+            player.Cure();
+            Log.Debug($"{player} successfully cured themselves.");
+            player.Broadcast(3, message: "You cured your self", shouldClearPrevious: true);
         }
 
         public void OnDying(DyingEventArgs ev)
@@ -82,11 +86,11 @@ namespace SCP008X.Components
 
             if (ev.DamageHandler.Type == DamageType.Warhead)
             {
-                Methods.Cure(ply);
+                ply.Cure();
                 return;
             }
 
-            Methods.Cure(ply);
+            ply.Cure();
             ev.IsAllowed = false;
             Scp008Role.Scp008.AddRole(ply);
         }

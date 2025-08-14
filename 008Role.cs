@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using PlayerRoles;
 using System.Linq;
 using Exiled.API.Enums;
@@ -12,12 +11,15 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.CustomRoles.API.Features;
 
 using Random = UnityEngine.Random;
+using Exiled.API.Features.Items;
 
 namespace SCP008X
 {
     [CustomRole(RoleTypeId.Scp0492)]
     public class Scp008Role : CustomRole
     {
+        private HashSet<ushort> infectedItems = new();
+
         bool scp008Breached = false;
 
         public static Scp008Role Scp008;
@@ -72,8 +74,13 @@ namespace SCP008X
         {
             Scp008Victims++;
 
-            if (player.CurrentItem != null)
-                player.DropHeldItem();
+            if (Plugin.Instance.Config.Virus.InfectItems)
+            {
+                foreach (Item item in player.Items)
+                    infectedItems.Add(item.Serial);
+            }
+
+            player.DropHeldItem();
 
             if (!Plugin.Instance.Config.Breached.CassieAnnounce || scp008Breached)
                 return;
@@ -94,11 +101,11 @@ namespace SCP008X
                     Log.Debug($"SCP-008 instance found for {ply.Nickname}.");
                 }
             }
+            int sum = check + TrackedPlayers.Count;
+            Log.Debug($"SCP-008 check completed, found {sum} instances.");
 
-            if (check + TrackedPlayers.Count <= 0)
+            if (sum > 0)
                 return;
-
-            Log.Debug($"SCP-008 check completed, found {check} instances.");
 
             scp008Breached = false;
             Cassie.Message(Plugin.Instance.Config.Breached.ConteimentAnnoc, true, true, true);
@@ -106,21 +113,37 @@ namespace SCP008X
 
         protected override void SubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Hurting += OnHurting;
             Exiled.Events.Handlers.Player.Died += OnDied;
+            Exiled.Events.Handlers.Player.Hurting += OnHurting;
+            Exiled.Events.Handlers.Player.PickingUpItem += OnAdded;
+
             base.SubscribeEvents();
         }
 
         protected override void UnsubscribeEvents()
         {
-            Exiled.Events.Handlers.Player.Hurting -= OnHurting;
             Exiled.Events.Handlers.Player.Died -= OnDied;
+            Exiled.Events.Handlers.Player.Hurting -= OnHurting;
+            Exiled.Events.Handlers.Player.PickingUpItem -= OnAdded;
+            infectedItems.Clear();
+
             base.UnsubscribeEvents();
+        }
+
+        private void OnAdded(PickingUpItemEventArgs ev)
+        {
+            if (!infectedItems.Contains(ev.Pickup.Serial))
+                return;
+
+            if (Check(ev.Player))
+                return;
+
+            ev.Player.Infect();
         }
 
         private void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.Attacker == null && !Check(ev.Attacker))
+            if (ev.Attacker == null || !Check(ev.Attacker))
                 return;
 
             ev.Amount = Damage;
@@ -138,7 +161,7 @@ namespace SCP008X
             if (ev.Player.GameObject.TryGetComponent(out SCP008 _) || !ev.Player.IsAlive)
                 return;
 
-            Methods.Infect(ev.Player);
+            ev.Player.Infect();
             Log.Debug($"Successfully infected {ev.Player} with random chance.");
         }
 
@@ -147,10 +170,12 @@ namespace SCP008X
             if (!Plugin.Instance.Config.AoeInfection.Enabled)
                 return;
 
+            if (!Check(ev.Player))
+                return;
+
             Log.Debug($"AOE infection enabled, running check...");
 
-            IEnumerable<Player> targets = Player.List
-                .Where(x =>
+            IEnumerable<Player> targets = Player.List.Where(x =>
                 x.IsHuman &&
                 x != ev.Player && 
                 x.CurrentRoom == ev.Player.CurrentRoom && 
@@ -158,11 +183,13 @@ namespace SCP008X
 
             foreach (Player ply in targets)
             {
+                if(ply == ev.Player) continue;
+
                 if (Random.Range(1, 100) >= Plugin.Instance.Config.AoeInfection.Chance)
                     continue;
 
-                Methods.Infect(ply);
-                Log.Debug($"Called Infect() method for {ev.Player} due to AOE.");
+                ply.Infect();
+                Log.Debug($"Called Infect for {ev.Player} due to AOE.");
             }
         }
     }

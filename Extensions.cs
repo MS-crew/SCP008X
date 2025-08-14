@@ -4,9 +4,9 @@ using Exiled.API.Features;
 
 namespace SCP008X
 {
-    public class Methods
+    public static class Extensions
     {
-        public static bool Infect(Player target)
+        public static bool Infect(this Player target)
         {
             if (target.GameObject.TryGetComponent(out SCP008 scp008))
                 return false;
@@ -15,7 +15,7 @@ namespace SCP008X
             return true;
         }
 
-        public static bool Cure(Player target)
+        public static bool Cure(this Player target)
         {
             if (!target.GameObject.TryGetComponent(out SCP008 scp008))
                 return false;
