@@ -43,7 +43,7 @@ namespace SCP008X.Commands
 
             bool infected = ply.Infect();
 
-            response = infected ? "This player is already infected." : $"{ply.Nickname} has been infected.";
+            response = infected ? $"{ply.Nickname} is infected." : $"{ply.Nickname} has been infected.";
             return infected;
         }
     }
