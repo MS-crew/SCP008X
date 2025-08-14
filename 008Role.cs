@@ -4,6 +4,7 @@ using System.Linq;
 using Exiled.API.Enums;
 using SCP008X.Components;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
 using System.Collections.Generic;
 using Exiled.API.Features.Attributes;
@@ -11,7 +12,6 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.CustomRoles.API.Features;
 
 using Random = UnityEngine.Random;
-using Exiled.API.Features.Items;
 
 namespace SCP008X
 {

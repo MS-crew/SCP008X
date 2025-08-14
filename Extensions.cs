@@ -8,7 +8,7 @@ namespace SCP008X
     {
         public static bool Infect(this Player target)
         {
-            if (target.GameObject.TryGetComponent(out SCP008 scp008))
+            if (target.GameObject.TryGetComponent(out SCP008 _))
                 return false;
 
             target.GameObject.AddComponent<SCP008>();
