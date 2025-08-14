@@ -3,7 +3,7 @@
 <a href="https://github.com/MS-crew/SCP008X/releases"><img src="https://img.shields.io/github/downloads/MS-crew/SCP008X/total?style=for-the-badge&logo=githubactions&label=Downloads" alt="GitHub Release Download"></a> <a href="https://github.com/MS-crew/SCP008X/releases"><img src="https://img.shields.io/badge/Build-3.5.1-brightgreen?style=for-the-badge&logo=gitbook" alt="GitHub Releases"></a>
 <a href="https://github.com/MS-crew/SCP008X/blob/master/LICENSE">
 <img src="https://img.shields.io/badge/Licence-GPL_3.0-blue?style=for-the-badge&logo=gitbook" alt="General Public License v3.0"></a>
-<a href="https://github.com/ExMod-Team/EXILED"><img src="https://img.shields.io/badge/Exiled-9.0.0-greeen?style=for-the-badge&logo=gitbook" alt="GitHub Exiled"></a>
+<a href="https://github.com/ExMod-Team/EXILED"><img src="https://img.shields.io/badge/Exiled-9.8.0-greeen?style=for-the-badge&logo=gitbook" alt="GitHub Exiled"></a>
 </div>
 
 <div align="center">
