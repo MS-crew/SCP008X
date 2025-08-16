@@ -18,13 +18,11 @@ namespace SCP008X
     [CustomRole(RoleTypeId.Scp0492)]
     public class Scp008Role : CustomRole
     {
-        private HashSet<ushort> infectedItems = new();
+        private readonly HashSet<ushort> infectedItems = new();
 
         bool scp008Breached = false;
 
-
         public static Scp008Role Scp008;
-
 
         public static int Scp008Victims = 0;
 
@@ -195,6 +193,74 @@ namespace SCP008X
 
                 ply.Infect();
                 Log.Debug($"Called Infect for {ev.Player} due to AOE.");
+            }
+        }
+
+        public Vector3 GetSpawnPositionPublic()
+        {
+            if (SpawnProperties == null || SpawnProperties.Count() == 0)
+            {
+                return Vector3.zero;
+            }
+
+            float totalchance = 0f;
+            List<(float chance, Vector3 pos)> spawnPointPool = new List<(float, Vector3)>(4);
+            if (!SpawnProperties.StaticSpawnPoints.IsEmpty())
+            {
+                foreach (StaticSpawnPoint staticSpawnPoint in SpawnProperties.StaticSpawnPoints)
+                {
+                    Add(staticSpawnPoint.Position, staticSpawnPoint.Chance);
+                }
+            }
+
+            if (!SpawnProperties.DynamicSpawnPoints.IsEmpty())
+            {
+                foreach (DynamicSpawnPoint dynamicSpawnPoint in SpawnProperties.DynamicSpawnPoints)
+                {
+                    Add(dynamicSpawnPoint.Position, dynamicSpawnPoint.Chance);
+                }
+            }
+
+            if (!SpawnProperties.RoleSpawnPoints.IsEmpty())
+            {
+                foreach (RoleSpawnPoint roleSpawnPoint in SpawnProperties.RoleSpawnPoints)
+                {
+                    Add(roleSpawnPoint.Position, roleSpawnPoint.Chance);
+                }
+            }
+
+            if (!SpawnProperties.RoomSpawnPoints.IsEmpty())
+            {
+                foreach (RoomSpawnPoint roomSpawnPoint in SpawnProperties.RoomSpawnPoints)
+                {
+                    Add(roomSpawnPoint.Position, roomSpawnPoint.Chance);
+                }
+            }
+
+            if (spawnPointPool.Count == 0 || totalchance <= 0f)
+            {
+                return Vector3.zero;
+            }
+
+            float num = (float)(Exiled.Loader.Loader.Random.NextDouble() * (double)totalchance);
+            foreach (var (num2, result) in spawnPointPool)
+            {
+                if (num < num2)
+                {
+                    return result;
+                }
+
+                num -= num2;
+            }
+
+            return Vector3.zero;
+            void Add(Vector3 pos, float chance)
+            {
+                if (!(chance <= 0f))
+                {
+                    spawnPointPool.Add((chance, pos));
+                    totalchance += chance;
+                }
             }
         }
     }

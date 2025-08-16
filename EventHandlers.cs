@@ -27,6 +27,13 @@ namespace SCP008X
             }
 
             Scp008Role.Scp008.AddRole(selectedPlayer);
+            Vector3 spawnPos = Scp008Role.Scp008.GetSpawnPositionPublic();
+
+            if(spawnPos != Vector3.zero)
+            {
+                selectedPlayer.Position = Scp008Role.Scp008.GetSpawnPositionPublic();
+            }
+            
             Log.Debug($"Player {selectedPlayer.DisplayNickname} spawned as SCP-008,Assigning SCP-008 role");
         }
 
