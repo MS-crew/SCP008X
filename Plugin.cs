@@ -18,7 +18,7 @@ namespace SCP008X
 
         public override string Author => "Zurna Sever";
 
-        public override Version Version { get; } = new Version(3, 5, 1);
+        public override Version Version { get; } = new Version(3, 5, 2);
 
         public override Version RequiredExiledVersion { get; } = new Version(9, 8, 0);
         
@@ -30,6 +30,8 @@ namespace SCP008X
             Config.Scp008role.Register();
 
             Server.RoundEnded += eventHandlers.OnRoundEnd;
+            Server.AllPlayersSpawned += eventHandlers.OnAllPlayerSpawned;
+
             Scp049.FinishingRecall += eventHandlers.OnRevived;
 
             base.OnEnabled();
@@ -39,6 +41,8 @@ namespace SCP008X
             Config.Scp008role.Unregister();
 
             Server.RoundEnded -= eventHandlers.OnRoundEnd;
+            Server.AllPlayersSpawned -= eventHandlers.OnAllPlayerSpawned;
+
             Scp049.FinishingRecall -= eventHandlers.OnRevived;
 
             eventHandlers = null;

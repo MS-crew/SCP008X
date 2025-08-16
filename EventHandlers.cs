@@ -2,11 +2,34 @@
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Scp049;
 using Exiled.Events.EventArgs.Server;
+using System.Linq;
+using Exiled.API.Extensions;
 
 namespace SCP008X
 {
     public class EventHandlers
     {
+
+        public void OnAllPlayerSpawned()
+        {
+            if (Random.Range(0, 100f) > Scp008Role.Scp008.SpawnChance)
+                return;
+
+            if (Scp008Role.Scp008.MinPlayerForSpawn < Server.PlayerCount)
+                return;
+
+            Player selectedPlayer = Player.List.GetRandomValue(p => p.Role.Team == PlayerRoles.Team.SCPs);
+
+            if (selectedPlayer == null)
+            {
+                Log.Debug("No suitable player found for SCP-008 role assignment.");
+                return;
+            }
+
+            Scp008Role.Scp008.AddRole(selectedPlayer);
+            Log.Debug($"Player {selectedPlayer.DisplayNickname} spawned as SCP-008,Assigning SCP-008 role");
+        }
+
         public void OnRoundEnd(RoundEndedEventArgs ev)
         {
             if (!Plugin.Instance.Config.RoundSummary.SummaryStats)
@@ -15,7 +38,7 @@ namespace SCP008X
             if (Scp008Role.Scp008Victims == 0)
                 return;
 
-            Map.ShowHint(string.Format(Plugin.Instance.Config.RoundSummary.RoundEnd, Scp008Role.Scp008Victims, Round.ChangedIntoZombies), 30f);
+            Map.ShowHint(string.Format(Plugin.Instance.Translation.RoundEnd, Scp008Role.Scp008Victims, Round.KillsByScp), 30f);
         }
 
         public void OnRevived(FinishingRecallEventArgs ev)

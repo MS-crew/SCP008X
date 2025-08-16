@@ -22,12 +22,17 @@ namespace SCP008X
 
         bool scp008Breached = false;
 
+
         public static Scp008Role Scp008;
+
 
         public static int Scp008Victims = 0;
 
+        public float Damage { get; set; } = 40f; 
+
+        public int MinPlayerForSpawn { get; set; } = 20;
+
         public override uint Id { get; set; } = 030;
-        public float Damage { get; set; } = 40f;
 
         public override RoleTypeId Role { get; set; } = RoleTypeId.Scp0492;
 
@@ -86,7 +91,7 @@ namespace SCP008X
                 return;
 
             scp008Breached = true;
-            Cassie.Message(Plugin.Instance.Config.Breached.Announcement, false, false, true);
+            Cassie.Message(Plugin.Instance.Translation.Announcement, false, false, true);
             if (Plugin.Instance.Config.Breached.TurnOffLights) Map.TurnOffAllLights(7f);
         }
 
@@ -108,7 +113,7 @@ namespace SCP008X
                 return;
 
             scp008Breached = false;
-            Cassie.Message(Plugin.Instance.Config.Breached.ConteimentAnnoc, true, true, true);
+            Cassie.Message(Plugin.Instance.Translation.ConteimentAnnoc, true, true, true);
         }
 
         protected override void SubscribeEvents()
