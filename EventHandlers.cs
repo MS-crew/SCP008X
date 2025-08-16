@@ -17,7 +17,7 @@ namespace SCP008X
             if (Scp008Role.Scp008.MinPlayerForSpawn < Server.PlayerCount)
                 return;
 
-            Player selectedPlayer = Player.List.GetRandomValue(p => p.Role.Team == PlayerRoles.Team.SCPs);
+            Player selectedPlayer = Player.List.GetRandomValue(p => p.IsScp);
 
             if (selectedPlayer == null)
             {
