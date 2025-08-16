@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using Exiled.API.Features;
+using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Scp049;
 using Exiled.Events.EventArgs.Server;
-using System.Linq;
-using Exiled.API.Extensions;
 
 namespace SCP008X
 {
