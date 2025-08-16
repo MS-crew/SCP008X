@@ -21,6 +21,7 @@ namespace SCP008X
                 return false;
 
             Object.Destroy(scp008);
+            Log.Debug($"{target.DisplayNickname} successfully cured themselves.");
             return true;
         }
     }

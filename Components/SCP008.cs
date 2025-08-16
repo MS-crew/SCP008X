@@ -21,7 +21,7 @@ namespace SCP008X.Components
             Playerh.UsedItem += OnHealed;
             Playerh.Spawned += WhenRoleChange;
 
-            ply.ShowHint($"<color=yellow><b>SCP-008</b></color>\n{Plugin.Instance.Config.Virus.InfectionAlert}", 10f);
+            ply.ShowHint(Plugin.Instance.Translation.InfectionAlert, 10f);
         }
         void OnDestroy()
         {
@@ -74,8 +74,7 @@ namespace SCP008X.Components
         private void Cured(Player player)
         {
             player.Cure();
-            Log.Debug($"{player} successfully cured themselves.");
-            player.Broadcast(3, message: "You cured your self", shouldClearPrevious: true);
+            player.Broadcast(3, message: Plugin.Instance.Translation.Cured, shouldClearPrevious: true);
         }
 
         public void OnDying(DyingEventArgs ev)

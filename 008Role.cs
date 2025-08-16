@@ -39,7 +39,7 @@ namespace SCP008X
 
         public override string CustomInfo { get; set; } = "SCP-008";
 
-        public override bool IgnoreSpawnSystem { get; set; } = false;
+        public override bool IgnoreSpawnSystem { get; set; } = true;
 
         public override bool KeepPositionOnSpawn { get; set; } = true;
 

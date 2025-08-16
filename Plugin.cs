@@ -6,7 +6,7 @@ using Server = Exiled.Events.Handlers.Server;
 
 namespace SCP008X
 {
-    public class Plugin : Plugin<Config>
+    public class Plugin : Plugin<Config, Translation>
     {
         public static Plugin Instance { get; private set; }
 
